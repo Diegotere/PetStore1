@@ -37,9 +37,9 @@ public class Pet {
                 .contentType("application/json") // comum em API REST - antigas era "text/xml"
                 .log().all()
                 .body(jsonBody)
-                .when()  // Quando
+        .when()  // Quando
                 .post(uri)
-                .then()  // Então
+        .then()  // Então
                 .log().all()
                 .statusCode(200)
                 .body("category.name", is("Dog"))
@@ -47,6 +47,25 @@ public class Pet {
                 .body("status", is("Atendido"))
                 .body("tags.name", contains("Yorkshire"))
 
+        ;
+
+    }
+    @Test
+    public void consultarPet() {
+        String petId = "15488965";
+
+        given()
+                .contentType("application/json")
+                .log().all()
+        .when()
+                .get(uri + "/" + petId)
+        .then()
+                .log().all()
+                .statusCode(200)
+                .body("category.name", is("Dog"))
+                .body("name", is("Iron"))
+                .body("status", is("Atendido"))
+                .body("tags.name", contains("Yorkshire"))
         ;
 
 
