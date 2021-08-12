@@ -10,6 +10,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.is;
 
 
 // 3 - Classe
@@ -31,7 +33,7 @@ public class Pet {
         // Dado - Quando - Então
         // Given - When - Then
 
-        given() // Dado
+        given() // Dado - Parte do Rest Assured
                 .contentType("application/json") // comum em API REST - antigas era "text/xml"
                 .log().all()
                 .body(jsonBody)
@@ -40,6 +42,11 @@ public class Pet {
                 .then()  // Então
                 .log().all()
                 .statusCode(200)
+                .body("category.name", is("Dog"))
+                .body("name", is("Iron"))
+                .body("status", is("Atendido"))
+                .body("tags.name", contains("Yorkshire"))
+
         ;
 
 
